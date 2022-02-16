@@ -23,6 +23,9 @@ export default function Print() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        position: "static",
+        height: "auto",
+        overflow: "visible",
       }}
     >
       <div
