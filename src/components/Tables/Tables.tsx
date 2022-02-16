@@ -47,10 +47,7 @@ const Tables = (props: any) => {
     // const buyerAddres = sellerAndBuyerData.buyer_address
     const content = [
       {
-        type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-        value: `TIN: ${sellerTinNo}`,
-        style: `text-align:center;`,
-        css: { "font-size": "8px" },
+        type: `<span style='color:red;text-align:center;'>TIN: ${buyerTin}</span>`,
       },
       {
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
@@ -223,6 +220,23 @@ const Tables = (props: any) => {
       style: "text-align:center;",
       css: { "font-size": "8px" },
     });
+
+    console.log(sellerTinNo);
+    /* const contentType = content[0];
+    const printContent = `${contentType.type}`;
+    const windowUrl = "";
+    const windowName = "E-Printer";
+    const printWindow = window.open(
+      windowUrl,
+      windowName,
+      "left=500,top=500,width=0,height=0"
+    );
+
+    printWindow?.document.write(printContent);
+    printWindow?.document.close();
+    printWindow?.focus();
+    printWindow?.print();
+    printWindow?.close(); */
   };
 
   const sumTotal = (index: number) => {
