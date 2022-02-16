@@ -9,12 +9,11 @@ export default function Print() {
   const state: any = location.state;
 
   const onPrint = () => {
-    console.log("print");
     const printableDiv: any =
       document.getElementById("printable_div")?.innerHTML;
     document.body.innerHTML = printableDiv;
+    window.focus();
     window.print();
-    return false;
   };
 
   return (
@@ -31,11 +30,13 @@ export default function Print() {
         style={{
           display: "flex",
           flexDirection: "column",
-          width: "30%",
+          width: "20%",
           padding: 10,
         }}
       >
-        <h2>Hello world</h2>
+        {state.content.map((items: any) => (
+          <div dangerouslySetInnerHTML={{ __html: items.value }} />
+        ))}
       </div>
       <button
         onClick={onPrint}

@@ -46,32 +46,36 @@ const Tables = (props: any) => {
     const reference = sellerAndBuyerData.reference;
     const bill_to = sellerAndBuyerData.bill_to;
     const buyerTin = sellerAndBuyerData.buyer_tin_no;
+    const centerStyle =
+      "display:flex;flex-direction:row;justify-content:center;";
     // const buyerAddres = sellerAndBuyerData.buyer_address
     const content = [
       {
-        type: `<span style='color:red;text-align:center;'>TIN: ${buyerTin}</span>`,
+        type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
+        value: `<span style=${centerStyle}>${sellerTinNo}</span>`,
+        style: `text-align:center;`,
       },
       {
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-        value: sellerName,
+        value: `<span style=${centerStyle}>${sellerName}</span>`,
         style: `text-align:center;`,
         css: { "font-size": "12px" },
       },
       {
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-        value: sellerAddress,
+        value: `<span style=${centerStyle}>${sellerAddress}</span>`,
         style: `text-align:center;`,
         css: { "font-size": "8px" },
       },
       {
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-        value: sellerSpecificAddress,
+        value: `<span style=${centerStyle}>${sellerSpecificAddress}</span>`,
         style: `text-align:center;`,
         css: { "font-size": "8px" },
       },
       {
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-        value: sellerPhone,
+        value: `<span style=${centerStyle}>${sellerPhone}</span>`,
         style: `text-align:center;`,
         css: { "font-size": "8px" },
       },
@@ -223,27 +227,7 @@ const Tables = (props: any) => {
       css: { "font-size": "8px" },
     });
 
-    console.log(sellerTinNo);
-    navigate("/print", {
-      state: {
-        content: content,
-      },
-    });
-    /* const contentType = content[0];
-    const printContent = `${contentType.type}`;
-    const windowUrl = "";
-    const windowName = "E-Printer";
-    const printWindow = window.open(
-      windowUrl,
-      windowName,
-      "left=500,top=500,width=0,height=0"
-    );
-
-    printWindow?.document.write(printContent);
-    printWindow?.document.close();
-    printWindow?.focus();
-    printWindow?.print();
-    printWindow?.close(); */
+    navigate("/print", { state: { content: content } });
   };
 
   const sumTotal = (index: number) => {
@@ -267,11 +251,15 @@ const Tables = (props: any) => {
           border: "1px solid grey",
         }}
       >
-        <tr style={{ border: "1px solid grey" }}>
-          {column.map((column) => (
-            <th style={{ border: "1px solid grey" }}>{column.label}</th>
-          ))}
-        </tr>
+        <thead>
+          <tr style={{ border: "1px solid grey" }}>
+            {column.map((column, index) => (
+              <th key={index} style={{ border: "1px solid grey" }}>
+                {column.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
         <tbody>
           {rows.map((row, index) => (
             <tr key={index} style={{ border: "1px solid grey" }}>
