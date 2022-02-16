@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { columns as column } from "./data/columns";
 const Tables = (props: any) => {
   const seller_data = props.sellerData;
   const buyer_data = props.buyerData;
+  const navigate = useNavigate();
 
   let sellerAndBuyerData: any = { ...seller_data, ...buyer_data };
 
@@ -222,6 +224,11 @@ const Tables = (props: any) => {
     });
 
     console.log(sellerTinNo);
+    navigate("/print", {
+      state: {
+        content: content,
+      },
+    });
     /* const contentType = content[0];
     const printContent = `${contentType.type}`;
     const windowUrl = "";
