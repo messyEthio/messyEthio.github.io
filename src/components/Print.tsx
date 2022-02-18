@@ -33,7 +33,7 @@ export default function Print() {
         style={{
           display: "flex",
           flexDirection: "column",
-          width: "20%",
+          width: "15%",
           padding: 10,
         }}
       >

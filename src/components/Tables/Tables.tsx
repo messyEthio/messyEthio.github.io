@@ -48,6 +48,17 @@ const Tables = (props: any) => {
     const buyerTin = sellerAndBuyerData.buyer_tin_no;
     const centerStyle =
       "display:flex;flex-direction:row;justify-content:center;";
+    const leftStyle =
+      "display:flex;flex-direction:row:justify-content:flex-end;";
+    const spaceBetweenStyle =
+      "display:flex;flex-direction:row;justify-content:space-between;";
+    const displayColumn =
+      "display:flex;flex-direction:column;margin-bottom:5px;";
+    const fontBoldStyle =
+      "display:flex;flex-direction:row;font-weight:bold;justify-content:space-between;";
+    const negativeLeftStyle = "display:flex,margin-left:-100px;";
+
+    const marginTopBottom = "margin-bottom:'20px'c";
     // const buyerAddres = sellerAndBuyerData.buyer_address
     const content = [
       {
@@ -81,49 +92,49 @@ const Tables = (props: any) => {
       },
       {
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-        value: `FS NO.${fsno}`,
+        value: `<span style-${leftStyle}>FS NO.${fsno}</span>`,
         style: `text-align:start;`,
         css: { "font-size": "8px" },
       },
       {
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-        value: date,
+        value: `<span style=${leftStyle}>${date}</span>`,
         style: `text-align:start;`,
         css: { "font-size": "8px" },
       },
       {
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-        value: "11:13",
-        style: `text-align:end;`,
-        css: { "font-size": "8px" },
-      },
-      {
-        type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-        value: "# Cash sales invoice ",
+        value: `<div style=${spaceBetweenStyle}><span># Cash Sales Invoice</span><span>#</span></div>`,
         style: `text-align:start;`,
         css: { "font-size": "8px" },
       },
       {
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-        value: `# Reference ${reference}`,
+        value: `<div style=${spaceBetweenStyle}><span># Reference ${reference}</span><span>#</span></div>`,
         style: `text-align:start;`,
         css: { "font-size": "8px" },
       },
       {
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-        value: "# Prepared by: Ni",
+        value: `<div style=${spaceBetweenStyle}><span># Prepared by: Ni</span><span>#</span></div>`,
         style: `text-align:start;`,
         css: { "font-size": "8px" },
       },
       {
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-        value: `# To: ${bill_to}`,
+        value: `<div style=${spaceBetweenStyle}><span># To: ${bill_to}</span><span>#</span></div>`,
         style: `text-align:start;`,
         css: { "font-size": "8px" },
       },
       {
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-        value: `Buyer's TIN: ${buyerTin}`,
+        value: `<span style=${leftStyle}>Buyer's TIN: ${buyerTin}</span>`,
+        style: `text-align:start;`,
+        css: { "font-size": "8px", "margin-bottom": "20px" },
+      },
+      {
+        type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
+        value: `<span style=${centerStyle}>-------</span>`,
         style: `text-align:start;`,
         css: { "font-size": "8px", "margin-bottom": "20px" },
       },
@@ -142,87 +153,74 @@ const Tables = (props: any) => {
       let unitPriceValue = (
         document.getElementById(`unit_price_${i}`) as HTMLInputElement
       ).value;
-      let lineValue = (document.getElementById(`line_${i}`) as HTMLInputElement)
-        .value;
 
-      let rowSummery = ` ${quantityValue} x ${unitPriceValue}`;
-      totalPrice += parseInt(lineValue);
-
+      let Rowsummation = Number(unitPriceValue) * Number(quantityValue);
+      totalPrice += Rowsummation;
       content.push({
         type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-        value: rowSummery,
+        value: `<div style=${spaceBetweenStyle}><div style=${displayColumn}><span>${quantityValue} X ${unitPriceValue}</span><span>${descriptionValue}</span></div>
+        <span>*${Rowsummation.toLocaleString()}</span></div>`,
         style: "margin-left:20px",
         css: { "font-size": "8px" },
       });
-      content.push({
-        type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-        value: `${descriptionValue} -------------------------------------------- ${lineValue
-          .toString()
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
-        style: `text-align:start;`,
-        css: { "font-size": "8px" },
-      });
     }
+    //calculate tax payment and total payment
+
     taxPayment = Math.round((15 / 100) * totalPrice);
     totalPayment = Math.round(totalPrice + taxPayment);
+    content.push({
+      type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
+      value: `<span style=${centerStyle}>-------</span>`,
+      style: `text-align:start;`,
+      css: { "font-size": "8px", "margin-bottom": "20px" },
+    });
 
     content.push({
       type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-      value: "-   -   -   -",
-      style: "text-align:center;margin-top:25px;",
-      css: { "font-size": "8px" },
-    });
-    content.push({
-      type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-      value: `TXBL1 ---------------------------------------------${totalPrice
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
+      value: `<div style=${spaceBetweenStyle}><span>TXBL1</span> <span>*${totalPrice.toLocaleString()}</span></div>`,
       style: "text-align:start;",
       css: { "font-size": "8px" },
     });
     content.push({
       type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-      value: `TAX1 15% ---------------------------------${taxPayment
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
+      value: `<div style=${spaceBetweenStyle}><span>TAX1 15%</span> <span>*${taxPayment.toLocaleString()}<span></div>`,
       style: "text-align:start;",
       css: { "font-size": "8px" },
     });
     content.push({
       type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-      value: "-   -   -   -",
-      style: "text-align:center;",
-      css: { "font-size": "8px" },
+      value: `<span style=${centerStyle}>-------</span>`,
+      style: `text-align:start;`,
+      css: { "font-size": "8px", "margin-bottom": "20px" },
     });
 
     content.push({
       type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-      value: `Total -------------------------------${totalPayment
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
+      value: `<div style=${fontBoldStyle}><span>Total:</span> <span>*${totalPayment.toLocaleString()}<span></div>`,
       style: "text-align:start;",
       css: { "font-size": "12px" },
     });
 
     content.push({
       type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-      value: `# Cash -----------------------------------${totalPayment
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
+      value: `<div style=${spaceBetweenStyle}><span>Cash</span> <span>*${totalPayment.toLocaleString()}<span></div>`,
       style: "text-align:start;",
       css: { "font-size": "8px" },
     });
 
     content.push({
       type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-      value: "E   R   C   A",
-      style: "text-align:center;",
+      value: `<div style=${spaceBetweenStyle}><span>ITEM#</span> <span>*${totalPayment.toLocaleString()}<span></div>`,
+      style: "text-align:start;",
       css: { "font-size": "8px" },
     });
 
     content.push({
       type: "text", // 'text' | 'barCode' | 'qrCode' | 'image' | 'table
-      value: "Powered by MarakiPOS 4.0",
+      value: `<div style=${centerStyle}><div style=${displayColumn}>
+      <span style=${centerStyle}>ERCA</span>
+      <span>E<span style=${negativeLeftStyle}>T</span><span>  BEN0009350 </span></span>
+      </div></div>`,
       style: "text-align:center;",
       css: { "font-size": "8px" },
     });
@@ -245,6 +243,7 @@ const Tables = (props: any) => {
   return (
     <div>
       <table
+        id="table"
         style={{
           borderCollapse: "collapse",
           width: "100%",
