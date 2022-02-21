@@ -5,12 +5,14 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Print from "./components/Print";
+import Dashboard from "./components/dashboard/Dashboard";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/print" element={<Print />} />
       </Routes>
     </BrowserRouter>
